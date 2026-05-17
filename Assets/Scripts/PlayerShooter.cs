@@ -22,38 +22,9 @@ public class PlayerShooter : MonoBehaviour
         currentStrategy = new SingleShotStrategy();
 
         currentFireRate = new NormalFireRate();
-    }
 
-    private void ActivateRapidFire()
-    {
-        if (Time.time < nextRapidFireTime)
-        {
-            Debug.Log("Rapid Fire is on cooldown");
-
-            return;
-        }
-
-        rapidFireActive = true;
-
-        rapidFireEndTime = Time.time + rapidFireDuration;
-
-        nextRapidFireTime = Time.time + rapidFireCooldown;
-
-        currentFireRate = new RapidFireDecorator(new NormalFireRate());
-
-        Debug.Log("Rapid Fire Activated");
-    }
-
-    private void LateUpdate()
-    {
-        if (rapidFireActive && Time.time >= rapidFireEndTime)
-        {
-            rapidFireActive = false;
-
-            currentFireRate = new NormalFireRate();
-
-            Debug.Log("Rapid Fire Ended");
-        }
+        StatusUI.Instance.SetWeaponMode("Weapon Mode: Single Shot");
+        StatusUI.Instance.ClearRapidFireStatus();
     }
 
     private void Update()
@@ -74,6 +45,7 @@ public class PlayerShooter : MonoBehaviour
         {
             currentStrategy = new SingleShotStrategy();
 
+            StatusUI.Instance.SetWeaponMode("Weapon Mode: Single Shot");
             Debug.Log("Single Shot");
         }
 
@@ -81,6 +53,7 @@ public class PlayerShooter : MonoBehaviour
         {
             currentStrategy = new TripleShotStrategy();
 
+            StatusUI.Instance.SetWeaponMode("Weapon Mode: Triple Shot");
             Debug.Log("Triple Shot");
         }
 
@@ -89,4 +62,39 @@ public class PlayerShooter : MonoBehaviour
             ActivateRapidFire();
         }
     }
+
+    private void ActivateRapidFire()
+    {
+        if (Time.time < nextRapidFireTime)
+        {
+            Debug.Log("Rapid Fire is on cooldown");
+            StatusUI.Instance.ShowTemporaryRapidFireStatus("Rapid Fire On Cooldown", 2f);
+            return;
+        }
+
+        rapidFireActive = true;
+
+        rapidFireEndTime = Time.time + rapidFireDuration;
+
+        nextRapidFireTime = Time.time + rapidFireCooldown;
+
+        currentFireRate = new RapidFireDecorator(new NormalFireRate());
+
+        Debug.Log("Rapid Fire Activated");
+        StatusUI.Instance.SetRapidFireStatus("Rapid Fire Active");
+    }
+
+    private void LateUpdate()
+    {
+        if (rapidFireActive && Time.time >= rapidFireEndTime)
+        {
+            rapidFireActive = false;
+
+            currentFireRate = new NormalFireRate();
+
+            Debug.Log("Rapid Fire Ended");
+            StatusUI.Instance.ClearRapidFireStatus();
+        }
+    }
+
 }

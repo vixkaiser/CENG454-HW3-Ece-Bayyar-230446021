@@ -4,7 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public float survivalTime = 120f;
 
-    private bool missionComplete;
+    public static bool missionComplete;
 
     private void Update()
     {

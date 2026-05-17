@@ -16,6 +16,9 @@ public class CoreHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (GameManager.missionComplete)
+            return;
+        
         if (isDestroyed)
             return;
 

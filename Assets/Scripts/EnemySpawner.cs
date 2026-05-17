@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (CoreHealth.gameOver)
+        if (CoreHealth.gameOver || GameManager.missionComplete)
         return;
 
         timer += Time.deltaTime;

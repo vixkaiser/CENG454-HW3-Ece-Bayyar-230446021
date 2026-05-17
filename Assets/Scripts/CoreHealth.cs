@@ -21,6 +21,8 @@ public class CoreHealth : MonoBehaviour
 
         currentHealth -= damage;
 
+        GameEvents.OnCoreDamaged?.Invoke(currentHealth);
+
         Debug.Log("Core Health: " + currentHealth);
 
         if (currentHealth <= 0)

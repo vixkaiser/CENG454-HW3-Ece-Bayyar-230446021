@@ -6,6 +6,11 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
         Invoke(nameof(DisableBullet), lifeTime);
     }
 
@@ -14,14 +19,13 @@ public class Bullet : MonoBehaviour
         CancelInvoke();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
+            DisableBullet();
         }
-
-        DisableBullet();
     }
 
     private void DisableBullet()

@@ -39,6 +39,7 @@ public class BulletPool : MonoBehaviour
             }
         }
 
+        Debug.Log("No bullets available in pool");
         return null;
     }
 }

@@ -2,30 +2,34 @@ using UnityEngine;
 
 public class PlayerShooter : MonoBehaviour
 {
-    public GameObject bulletPrefab;
     public Transform firePoint;
-    public float bulletSpeed = 20f;
+
+    private IWeaponStrategy currentStrategy;
+
+    private void Start()
+    {
+        currentStrategy = new SingleShotStrategy();
+    }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            currentStrategy.Shoot(firePoint);
         }
-    }
 
-    private void Shoot()
-    {
-        GameObject bullet = BulletPool.Instance.GetBullet();
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            currentStrategy = new SingleShotStrategy();
 
-    if (bullet == null)
-        return;
+            Debug.Log("Single Shot");
+        }
 
-        bullet.transform.position = firePoint.position;
-        bullet.transform.rotation = firePoint.rotation;
-        
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            currentStrategy = new TripleShotStrategy();
 
-        rb.linearVelocity = firePoint.forward * bulletSpeed;
+            Debug.Log("Triple Shot");
+        }
     }
 }

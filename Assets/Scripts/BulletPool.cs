@@ -6,7 +6,7 @@ public class BulletPool : MonoBehaviour
     public static BulletPool Instance;
 
     public GameObject bulletPrefab;
-    public int poolSize = 20;
+    public int poolSize = 100;
 
     private List<GameObject> bulletPool = new List<GameObject>();
 

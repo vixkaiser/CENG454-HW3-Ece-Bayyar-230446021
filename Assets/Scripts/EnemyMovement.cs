@@ -19,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
 
             if (coreHealth != null)
             {
-                coreHealth.TakeDamage(10);
+                coreHealth.TakeDamage(5);
             }
 
             Destroy(gameObject);

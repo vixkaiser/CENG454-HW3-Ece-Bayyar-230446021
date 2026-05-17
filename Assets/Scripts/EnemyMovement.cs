@@ -11,6 +11,21 @@ public class EnemyMovement : MonoBehaviour
         target = GameObject.Find("Core").transform;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Core"))
+        {
+            CoreHealth coreHealth = collision.gameObject.GetComponent<CoreHealth>();
+
+            if (coreHealth != null)
+            {
+                coreHealth.TakeDamage(10);
+            }
+
+            Destroy(gameObject);
+        }
+    }
+
     private void Update()
     {
         if (target == null)

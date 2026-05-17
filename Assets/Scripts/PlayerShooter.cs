@@ -16,8 +16,14 @@ public class PlayerShooter : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = BulletPool.Instance.GetBullet();
 
+    if (bullet == null)
+        return;
+
+        bullet.transform.position = firePoint.position;
+        bullet.transform.rotation = firePoint.rotation;
+        
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         rb.linearVelocity = firePoint.forward * bulletSpeed;

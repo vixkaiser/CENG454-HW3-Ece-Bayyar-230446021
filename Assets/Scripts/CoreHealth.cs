@@ -6,9 +6,11 @@ public class CoreHealth : MonoBehaviour
 
     private int currentHealth;
     private bool isDestroyed;
+    public static bool gameOver;
 
     private void Start()
     {
+        gameOver = false;
         currentHealth = maxHealth;
     }
 
@@ -25,6 +27,7 @@ public class CoreHealth : MonoBehaviour
         {
             currentHealth = 0;
             isDestroyed = true;
+            gameOver = true;
 
             Debug.Log("GAME OVER");
         }
